@@ -45,7 +45,7 @@ These imports come from custom modules made by me. Their location is the ./utils
 + startup: starts/executes specific programs when the window manager starts.
 + constants: contains constants for default constants.like a terminal, text editor, file manager. Also contains constants for keys like the modkey.
 + hotkeys: contains keyboard shortcuts definitions on different categories.
-+ ckeys: contains keyboard shortcuts that relate to clients (windows)
++ ckeys: contains keyboard shortcuts that relate and use clients (windows) on their functions.
 
 #+begin_src lua
 require("utils.startup")
