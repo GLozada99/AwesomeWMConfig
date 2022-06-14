@@ -3,6 +3,7 @@ local terminal = 'alacritty' -- defined before to be used in _cmd vars
 local default = {
   modkey = 'Mod4',
   alt = 'Mod1',
+  root_dir = '/home/gustavolozada/.config/awesome/',
   terminal = terminal,
   emacs = 'emacs',
   browser = 'brave',
