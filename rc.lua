@@ -44,57 +44,35 @@ end
 
 beautiful.init(constants.root_dir .. "/utils/theme/theme.lua")
 
--- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.max,
     awful.layout.suit.tile,
-    -- awful.layout.suit.floating,
-    -- awful.layout.suit.tile.left,
-    -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
-    -- awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
 }
--- }}}
 
--- {{{ Menu
--- Create a launcher widget and a main menu
 myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", constants.terminal .. " -e man awesome" },
-   { "edit config", constants.editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
+  { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+  { "open terminal", constants.terminal },
+  { "manual", constants.terminal .. " -e man awesome" },
+  { "edit config", constants.editor_cmd .. " " .. awesome.conffile },
+  { "restart", awesome.restart },
+  { "quit", function() awesome.quit() end },
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", constants.terminal }
-                                  }
-                        })
+mymainmenu = awful.menu(
+  { items = {
+      { "awesome", myawesomemenu, beautiful.awesome_icon }
+    }
+  }
+)
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
--- Menubar configuration
-menubar.utils.terminal = constants.terminal -- Set the terminal for applications that require it
--- }}}
-
--- Keyboard map indicator and switcher
+menubar.utils.terminal = constants.terminal
 mykeyboardlayout = awful.widget.keyboardlayout()
 
--- {{{ Wibar
--- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
--- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
                     awful.button({ constants.modkey }, 1, function(t)

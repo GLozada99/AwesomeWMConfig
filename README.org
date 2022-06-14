@@ -9,7 +9,6 @@ Awesom Window Manager is a Tiling Window Manager written and configured in the L
 This configuration parts from the default rc.lua which can be found at https://awesomewm.org/doc/api/sample%20files/rc.lua.html
 
 * Imports
-
 ** Default Imports
 This imports come from the default rc.lua file mentioned before, and use awesome libreries such as gears and awful, as well as others like beautiful, naughty and menubar.
 
@@ -29,7 +28,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 #+end_src
-
 
 ** Third Party Imports
 These imports come from third party modules for things like widgets. Their location is the root directory of the project, at the same level as the rc.lua.
@@ -55,7 +53,7 @@ local ckeys = require("utils.ckeys")
 
 #+end_src
 
-** Error Handling and Fallback Config
+* Error Handling and Fallback Config
 #+begin_src lua
 if awesome.startup_errors then
   naughty.notify({
@@ -82,66 +80,60 @@ end
 
 #+end_src
 
-** Theme
+* Theme
 Use of beautiful for getting the theme from the theme.lua file in the ./utils/theme/ directory.
 #+begin_src lua
 beautiful.init(constants.root_dir .. "/utils/theme/theme.lua")
 
 #+end_src
 
-#+begin_src lua
+* Layouts
+I prefer to only use max and normal tile layout, but all the options are at https://awesomewm.org/doc/api/libraries/awful.layout.html#Client_layouts.
 
--- Table of layouts to cover with awful.layout.inc, order matters.
+The order in which they are added is the same in which they will be iterated over.
+
+#+begin_src lua
 awful.layout.layouts = {
     awful.layout.suit.max,
     awful.layout.suit.tile,
-    -- awful.layout.suit.floating,
-    -- awful.layout.suit.tile.left,
-    -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
-    -- awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
 }
--- }}}
 
--- {{{ Menu
--- Create a launcher widget and a main menu
+#+end_src
+
+* Menu Launcher
+The menu launcher contains a selection of normally used options in a widget located at the upper left side of each scree.
+#+begin_src lua
+
 myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", constants.terminal .. " -e man awesome" },
-   { "edit config", constants.editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
+  { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+  { "open terminal", constants.terminal },
+  { "manual", constants.terminal .. " -e man awesome" },
+  { "edit config", constants.editor_cmd .. " " .. awesome.conffile },
+  { "restart", awesome.restart },
+  { "quit", function() awesome.quit() end },
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", constants.terminal }
-                                  }
-                        })
+mymainmenu = awful.menu(
+  { items = {
+      { "awesome", myawesomemenu, beautiful.awesome_icon }
+    }
+  }
+)
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
--- Menubar configuration
-menubar.utils.terminal = constants.terminal -- Set the terminal for applications that require it
--- }}}
+#+end_src
 
--- Keyboard map indicator and switcher
+* Menubar
+Located just next to the launcher, contains tags (workspaces), tasklist, keyboardlayout, among others.
+
+#+begin_src lua
+menubar.utils.terminal = constants.terminal
 mykeyboardlayout = awful.widget.keyboardlayout()
 
--- {{{ Wibar
--- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
--- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
                     awful.button({ constants.modkey }, 1, function(t)
@@ -180,7 +172,10 @@ local tasklist_buttons = gears.table.join(
                      awful.button({ }, 5, function ()
                                               awful.client.focus.byidx(-1)
                                           end))
+#+end_src
 
+
+#+begin_src lua
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
