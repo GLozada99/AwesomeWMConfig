@@ -152,42 +152,30 @@ awful.screen.connect_for_each_screen(function(s)
           s.mylayoutbox,
 	        volume_widget{
 		      widget_type = "horizontal_bar",
-	        },
+	        }
         },
     }
 end)
 
--- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
--- }}}
---
 
-
-
--- {{{ Key bindings
 globalkeys = gears.table.join(
     hotkeys,
-    awful.key({ constants.modkey,           }, "s",      hotkeys_popup.show_help,
+    awful.key({ constants.modkey, }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ constants.alt, constants.modkey  }, "Left",   awful.tag.viewprev,
+    awful.key({ constants.alt, constants.modkey }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
-    awful.key({ constants.alt, constants.modkey  }, "Right",  awful.tag.viewnext,
+    awful.key({ constants.alt, constants.modkey }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
-    awful.key({ constants.modkey,           }, "Escape", awful.tag.history.restore,
+    awful.key({ constants.modkey, }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
-
-    -- Layout manipulation
-    -- awful.key({ constants.modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
-    --          {description = "swap with next client by index", group = "client"}),
-    -- awful.key({ constants.modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
-    --          {description = "swap with previous client by index", group = "client"}),
-    awful.key({ constants.modkey,           }, "u", awful.client.urgent.jumpto,
+    awful.key({ constants.modkey, }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ constants.modkey,           }, "Tab",
+    awful.key({ constants.modkey, }, "Tab",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -195,17 +183,10 @@ globalkeys = gears.table.join(
             end
         end,
         {description = "go back", group = "client"}),
-
-    -- Standard program
     awful.key({ constants.modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ constants.modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
-
-    -- awful.key({ constants.modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
-    --          {description = "increase master width factor", group = "layout"}),
-    -- awful.key({ constants.modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
-    --          {description = "decrease master width factor", group = "layout"}),
     awful.key({ constants.modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
     awful.key({ constants.modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
@@ -218,7 +199,6 @@ globalkeys = gears.table.join(
               {description = "select next", group = "layout"}),
     awful.key({ constants.modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
-
     awful.key({ constants.modkey, "Control" }, "n",
               function ()
                   local c = awful.client.restore()
@@ -231,7 +211,6 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Prompt using dmenu
     awful.key({ constants.modkey },            "space",     function () awful.util.spawn("dmenu_run") end,
               {description = "run prompt", group = "launcher"}),
 
@@ -245,10 +224,10 @@ globalkeys = gears.table.join(
                   }
               end,
               {description = "lua execute prompt", group = "awesome"}),
-    -- Menubar
     awful.key({ constants.modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 )
+
 clientkeys = gears.table.join(
     ckeys,
     awful.key({ constants.modkey,           }, "f",
@@ -282,7 +261,7 @@ clientkeys = gears.table.join(
         {description = "(un)maximize", group = "client"}),
     awful.key({ constants.modkey, "Control" }, "m",
         function (c)
-            c.maximized_vertical = not c.maximized_vertical
+        c.maximized_vertical = not c.maximized_vertical
             c:raise()
         end ,
         {description = "(un)maximize vertically", group = "client"}),
@@ -294,9 +273,6 @@ clientkeys = gears.table.join(
         {description = "(un)maximize horizontally", group = "client"})
 )
 
--- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it work on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
@@ -358,14 +334,9 @@ clientbuttons = gears.table.join(
     end)
 )
 
--- Set keys
 root.keys(globalkeys)
--- }}}
 
--- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
-    -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
@@ -378,7 +349,6 @@ awful.rules.rules = {
      }
     },
 
-    -- Floating clients.
     { rule_any = {
         instance = {
           "DTA",  -- Firefox addon DownThemAll.
@@ -397,8 +367,6 @@ awful.rules.rules = {
           "veromix",
           "xtightvncviewer"},
 
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
         name = {
           "Event Tester",  -- xev.
         },
@@ -409,35 +377,20 @@ awful.rules.rules = {
         }
       }, properties = { floating = true }},
 
-    -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = false } -- Removing title bars
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
 }
--- }}}
-
--- {{{ Signals
--- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
-
     if awesome.startup
       and not c.size_hints.user_position
       and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
 end)
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
     local buttons = gears.table.join(
         awful.button({ }, 1, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
@@ -475,7 +428,6 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
