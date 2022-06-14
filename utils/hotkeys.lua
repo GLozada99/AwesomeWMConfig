@@ -17,13 +17,6 @@ local layout = {
     end, {description = "set tile layout", group = "layout"}),
 }
 
-local client = {
-	awful.key({ apps.alt, }, "Return",
-	function (c) 
-		c:move_to_screen() 
-	end, {description = "move to screen", group = "client"}),
-}
-
 local spawner = {	
 	awful.key({ apps.modkey, "Shift" }, "Return",
 	function () awful.spawn(apps.emacs) 
@@ -70,12 +63,4 @@ hotkeys = gears.table.join(
 	table.unpack(misc)
 )
 
-local clientkeys = gears.table.join(
-	table.unpack(client)
-)
-
-local result = {
-	hotkeys = hotkeys,
-	ckeys = clientkeys
-}
-return result
+return hotkeys
