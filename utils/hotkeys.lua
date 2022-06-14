@@ -1,39 +1,40 @@
 local awful = require("awful")
-local apps = require("apps")
 local gears = require("gears")
 
+local constants = require("utils.constants")
+
 local client_screen = {}
-client_screen = require("utils.helpers").getClientScreenHotkeys(client_screen, apps)
+client_screen = require("utils.helpers").getClientScreenHotkeys(client_screen, constants)
 
 local layout = {
-	awful.key({ apps.alt, }, ".",
+	awful.key({ constants.alt, }, ".",
     function()
         awful.layout.set(awful.layout.suit.max)
     end, {description = "set max layout", group = "layout"}),
 
-	awful.key({ apps.alt, }, "/",
+	awful.key({ constants.alt, }, "/",
     function()
         awful.layout.set(awful.layout.suit.tile)
     end, {description = "set tile layout", group = "layout"}),
 }
 
 local spawner = {	
-	awful.key({ apps.modkey, "Shift" }, "Return",
-	function () awful.spawn(apps.emacs) 
+	awful.key({ constants.modkey, "Shift" }, "Return",
+	function () awful.spawn(constants.emacs)
 	end, {description = "open a emacs", group = "spawner"}),
 	
-	awful.key({ apps.modkey, }, "Return",
-	function () awful.spawn(apps.terminal) 
+	awful.key({ constants.modkey, }, "Return",
+	function () awful.spawn(constants.terminal)
 	end, {description = "open a terminal", group = "spawner"}),
 	
-	awful.key({ apps.modkey, } , "e",
+	awful.key({ constants.modkey, } , "e",
     	function() 
-	    	awful.spawn(apps.file_manager_cmd .. " /home/gustavolozada/.config/awesome/") 
+	    	awful.spawn(constants.file_manager_cmd .. " /home/gustavolozada/.config/awesome/")
     	end, {description="open awesome dir", group="spawner"}),
 	
-	awful.key({ apps.modkey, } , "b",
+	awful.key({ constants.modkey, } , "b",
     	function() 
-	    awful.util.spawn(apps.browser)
+	    awful.util.spawn(constants.browser)
     	end, {description="open browser", group="spawner"}),
 }
 

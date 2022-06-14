@@ -1,9 +1,9 @@
 local awful = require("awful")
 local gears = require("gears")
-local apps = require("apps")
+local constants = require("utils.constants")
 
 local client = {
-	awful.key({ apps.alt, }, "Return",
+	awful.key({ constants.alt, }, "Return",
 	function (c) 
 		c:move_to_screen() 
 	end, {description = "move to screen", group = "client"}),
